@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Forgot your password</h1>
+        <p>Please enter the email address you'd like your password reset information sent to</p>
+        
+        <form id="reset-form" action="send_reset_link.php" method="POST">
+            <div class="input-field">
+                <input type="email" id="email" name="email" required placeholder="Enter email address">
+            </div>
+            <button type="submit">Request reset link</button>
+        </form>
+
+        <a href="login.html" class="back-to-login">Back To Login</a>
+        <p id="message" class="message"></p>
+    </div>
+
+    <script>
+    document.getElementById('reset-form').addEventListener('submit', function(event) {
+        const email = document.getElementById('email').value;
+    
+        // Simple client-side validation
+        if (!email) {
+            event.preventDefault();
+            document.getElementById('message').textContent = 'Please enter a valid email.';
+            document.getElementById('message').style.color = 'red';
+        }
+    });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

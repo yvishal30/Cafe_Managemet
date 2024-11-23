@@ -25,7 +25,7 @@
 </head>
 <body>
     <main class="container mt-5">
-        <h1 class="text-center">Confirmed Orders Dashboard</h1>
+        <h1 class="text-center">Confirmed Orders</h1>
         <table class="table table-striped mt-4">
             <thead class="table-dark">
                 <tr>
@@ -34,7 +34,6 @@
                     <th>Price (₹)</th>
                     <th>Quantity</th>
                     <th>Total Price (₹)</th>
-                    <th>Image</th>
                     <th>Confirmed At</th>
                 </tr>
             </thead>
@@ -61,7 +60,6 @@
                         echo "<td>₹" . htmlspecialchars($row['product_price']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['quantity']) . "</td>";
                         echo "<td>₹" . htmlspecialchars($row['total_price']) . "</td>";
-                        echo "<td><img src='" . htmlspecialchars($row['product_image_url']) . "' alt='Product Image'></td>";
                         echo "<td>" . htmlspecialchars($row['confirmed_at']) . "</td>";
                         echo "</tr>";
                     }

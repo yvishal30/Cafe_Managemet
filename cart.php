@@ -1,6 +1,68 @@
 <?php
 session_start();
+error_reporting(0);
+
+// Database connection
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$db = 'restaurant'; 
+$conn = new mysqli($host, $user, $pass, $db);
+
+if ($conn->connect_error) {
+    die('Connection failed: ' . $conn->connect_error);
+}
+
+// Initialize cart
 $cartItems = $_SESSION['cart'] ?? [];
+
+// Remove single item from cart
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['removeItem'])) {
+    $keyToRemove = $_POST['removeItem'];
+    if (isset($_SESSION['cart'][$keyToRemove])) {
+        unset($_SESSION['cart'][$keyToRemove]); // Remove the item from the session
+    }
+    header("Location: cart.php"); // Redirect to avoid form resubmission
+    exit;
+}
+
+// Confirm selected orders
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmOrder']) && isset($_POST['selectedItems'])) {
+    $confirmedOrderIds = [];
+    foreach ($_POST['selectedItems'] as $key) {
+        if (isset($cartItems[$key])) {
+            $productName = $cartItems[$key]['productName'];
+            $productPrice = $cartItems[$key]['productPrice'];
+            $quantity = $cartItems[$key]['quantity'];
+            $totalPrice = $cartItems[$key]['totalPrice'];
+            $productImageURL = $cartItems[$key]['productImageURL'];
+            $confirmedAt = date('Y-m-d H:i:s');
+
+            $orderId = 'ORD-' . uniqid(); // Generate a unique order ID
+
+            // Insert into confirmed orders table
+            $stmt = $conn->prepare("INSERT INTO confirmed_orders (order_id, product_name, product_price, quantity, total_price, product_image_url, confirmed_at) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssdiiss", $orderId, $productName, $productPrice, $quantity, $totalPrice, $productImageURL, $confirmedAt);
+            $stmt->execute();
+
+            if ($stmt->affected_rows > 0) {
+                $confirmedOrderIds[] = $orderId;
+                unset($_SESSION['cart'][$key]); // Remove confirmed item from the cart
+            }
+            $stmt->close();
+        }
+    }
+
+    if (!empty($confirmedOrderIds)) {
+        $_SESSION['orderSuccess'] = 'Order Confirmed! Your Order ID(s): ' . implode(', ', $confirmedOrderIds);
+    } else {
+        $_SESSION['orderError'] = 'No items were confirmed. Please try again.';
+    }
+    header("Location: cart.php"); // Redirect to avoid form resubmission
+    exit;
+}
+
+$conn->close();
 ?>
 
 <!doctype html>
@@ -12,7 +74,6 @@ $cartItems = $_SESSION['cart'] ?? [];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-        /* Custom Table Styling */
         .table {
             border: 1px solid #dee2e6;
             border-radius: 10px;
@@ -36,85 +97,19 @@ $cartItems = $_SESSION['cart'] ?? [];
         .btn-remove:hover {
             background-color: #c82333;
         }
+        .btn-confirm {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .btn-confirm:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
-<?php
-error_reporting(0);
-session_start();
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$db = 'restaurant'; // Replace with your database name
-$conn = new mysqli($host, $user, $pass, $db);
-
-// Check connection
-if ($conn->connect_error) {
-    die('Connection failed: ' . $conn->connect_error);
-}
-
-$cartItems = $_SESSION['cart'] ?? [];
-
-// Add order details to orders table
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['placeOrder'])) {
-    foreach ($cartItems as $key => $item) {
-        $productName = $item['productName'];
-        $productPrice = $item['productPrice'];
-        $quantity = $item['quantity'];
-        $totalPrice = $item['totalPrice'];
-
-        $stmt = $conn->prepare("INSERT INTO orders (product_name, product_price, quantity, total_price) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("siii", $productName, $productPrice, $quantity, $totalPrice);
-        $stmt->execute();
-        $stmt->close();
-    }
-
-    // Clear the cart after placing the order
-    unset($_SESSION['cart']);
-    header("Location: confirmation.php"); // Redirect to an order confirmation page
-    exit;
-}
-
-// Remove order details when an item is deleted from the cart
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['removeItem'])) {
-    $key = $_POST['removeItem'];
-    if (isset($cartItems[$key])) {
-        $productName = $cartItems[$key]['productName'];
-
-        // Remove from orders table
-        $stmt = $conn->prepare("DELETE FROM orders WHERE product_name = ?");
-        $stmt->bind_param("s", $productName);
-        $stmt->execute();
-        $stmt->close();
-
-        // Remove from the session cart
-        unset($_SESSION['cart'][$key]);
-    }
-}
-
-// Remove selected order details
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['removeSelected']) && isset($_POST['selectedItems'])) {
-    foreach ($_POST['selectedItems'] as $key) {
-        if (isset($cartItems[$key])) {
-            $productName = $cartItems[$key]['productName'];
-
-            // Remove from orders table
-            $stmt = $conn->prepare("DELETE FROM orders WHERE product_name = ?");
-            $stmt->bind_param("s", $productName);
-            $stmt->execute();
-            $stmt->close();
-
-            // Remove from the session cart
-            unset($_SESSION['cart'][$key]);
-        }
-    }
-    header("Location: cart.php");
-    exit;
-}
-
-$conn->close();
-?>
-
 <div class="sticky-top">
     <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
         <div class="container-fluid">
@@ -134,19 +129,19 @@ $conn->close();
                     <a class="nav-link active" href="./book_table.php">Reservation</a>
                     <a class="nav-link active" href="./contact.php">Contact</a>
                     <a class="nav-link active" href="./cart.php">
-    <i class="fas fa-shopping-cart" style="position: relative;">
-      <span id="cart-badge" style="
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        background-color: red;
-        color: white;
-        border-radius: 50%;
-        padding: 2px 6px;
-        font-size: 12px;
-        display: none;">0</span>
-    </i>
-  </a>
+                        <i class="fas fa-shopping-cart" style="position: relative;">
+                            <span id="cart-badge" style="
+                                position: absolute;
+                                top: -10px;
+                                right: -10px;
+                                background-color: red;
+                                color: white;
+                                border-radius: 50%;
+                                padding: 2px 6px;
+                                font-size: 12px;
+                                display: none;">0</span>
+                        </i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -155,8 +150,19 @@ $conn->close();
 
 <div class="container mt-5">
     <h1 style="text-align:center;color:crimson">Your Cart</h1>
+
+    <?php if (isset($_SESSION['orderSuccess'])) { ?>
+        <div class="alert alert-success"><?= $_SESSION['orderSuccess'] ?></div>
+        <?php unset($_SESSION['orderSuccess']); ?>
+    <?php } ?>
+
+    <?php if (isset($_SESSION['orderError'])) { ?>
+        <div class="alert alert-danger"><?= $_SESSION['orderError'] ?></div>
+        <?php unset($_SESSION['orderError']); ?>
+    <?php } ?>
+
     <?php if (!empty($cartItems)) { ?>
-        <form id="cartForm" method="POST" action="update_cart.php">
+        <form method="POST">
             <table class="table table-bordered">
                 <thead class="table-dark">
                     <tr>
@@ -190,40 +196,38 @@ $conn->close();
                 </tbody>
             </table>
             <div class="text-center mt-3">
-    <button type="submit" class="btn btn-danger me-2" name="removeSelected">Remove Selected Items</button>
-    <a href="menu.php" class="btn btn-primary">Continue Shopping</a>
-</div>
-
+                <button type="submit" class="btn btn-success btn-confirm" name="confirmOrder">Confirm Order</button>
+                <a href="menu.php" class="btn btn-primary">Continue Shopping</a>
+            </div>
         </form>
     <?php } else { ?>
         <p>Your cart is empty!</p>
         <a href="menu.php" class="btn btn-primary">Go to Menu</a>
     <?php } ?>
 </div>
-<div style="margin-top:500px;">
-        <footer style="background-color:#130e0e;color: #fff;padding: 20px;text-align: center;height: 20%;width: 100%;margin-bottom: 0px;">
-            <p>Copyright &copy; 2024 VS Restaurant. All rights reserved.</p>
-</footer>
-    </div>
-    <script>
-        function updateCartBadge() {
-    fetch('get_cart_count.php')
-        .then(response => response.json())
-        .then(data => {
-            const cartBadge = document.getElementById('cart-badge');
-            const itemCount = data.itemCount;
-            if (itemCount > 0) {
-                cartBadge.style.display = 'inline';
-                cartBadge.textContent = itemCount;
-            } else {
-                cartBadge.style.display = 'none';
-            }
-        })
-        .catch(error => console.error('Error fetching cart count:', error));
-}
 
-// Call the function initially and after every item is added to the cart
-updateCartBadge();
-        </script>
+<div  style="margin-top:500px;">
+<footer style="background-color:#130e0e;color: #fff;padding: 20px;text-align: center;margin-top: 50px;">
+    <p>Copyright &copy; 2024 VS Restaurant. All rights reserved.</p>
+</footer>
+</div>
+
+<script>
+    function updateCartBadge() {
+        fetch('get_cart_count.php')
+            .then(response => response.json())
+            .then(data => {
+                const cartBadge = document.getElementById('cart-badge');
+                const itemCount = data.itemCount;
+                if (itemCount > 0) {
+                    cartBadge.style.display = 'inline-block';
+                    cartBadge.textContent = itemCount;
+                } else {
+                    cartBadge.style.display = 'none';
+                }
+            });
+    }
+    updateCartBadge();
+</script>
 </body>
 </html>

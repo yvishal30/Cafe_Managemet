@@ -60,9 +60,19 @@ if (!$registerResult) {
             color: crimson;
         }
 
-        .table th,
-        .table td {
+        .table {
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .table th, .table td {
+            vertical-align: middle;
             text-align: center;
+        }
+
+        .table .btn-danger {
+            padding: 5px 10px;
         }
 
         footer {
@@ -72,17 +82,65 @@ if (!$registerResult) {
             padding: 10px;
             margin-top: 30px;
         }
+
+        footer-text {
+            font-size: 14px;
+        }
+
+        /* Hover effect for table rows */
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Button styling */
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #c82333;
+        }
+
+        .btn-danger:focus,
+        .btn-danger.focus {
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.5);
+        }
     </style>
 </head>
 
 <body>
+<div class="sticky-top">
+        <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    
+                    <span style="font-family: 'Times New Roman', Times, serif;">VS Restaurant Admin</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="navbar-nav ms-auto">
+                        <a class="nav-link active" href="./index.php">Dashboard</a>
+                        <a class="nav-link active" href="./user_data.php">User Data</a>
+                        <a class="nav-link active" href="./reservation.php">Reservations</a>
+                        <a class="nav-link active" href="./confirmed_details.php">Order Details</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
     <div class="container">
-        <!-- <h1>Admin Panel - User Management</h1> -->
+        <!-- <h1>Admin User Management</h1> -->
 
         <!-- Login Table -->
-        <h3 style="text-align:center">Login Table</h3>
-        <table class="table table-bordered">
-            <thead>
+        <h3 class="text-center">Login Table</h3>
+        <table class="table table-bordered  table-hover">
+            <thead class="table-dark">
                 <tr>
                     <th>Login ID</th>
                     <th>Username</th>
@@ -117,9 +175,9 @@ if (!$registerResult) {
         </table>
 
         <!-- Register Table -->
-        <h3 style="text-align:center">Register Table</h3>
-        <table class="table table-bordered">
-            <thead>
+        <h3 class="text-center">Register Table</h3>
+        <table class="table table-bordered  table-hover">
+            <thead class="table-dark">
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
@@ -154,9 +212,14 @@ if (!$registerResult) {
         </table>
     </div>
 
+    <!-- Footer -->
     <footer>
-        <p>© 2024 VS Restaurant. All rights reserved.</p>
+        <p class="footer-text">© 2024 VS Restaurant. All rights reserved.</p>
     </footer>
+
+    <!-- Bootstrap JS & Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>

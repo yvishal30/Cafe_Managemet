@@ -26,15 +26,15 @@ $result = $conn->query($sql);
     <title>Reservation Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #f8f9fa;
+        footer {
+            background-color: #130e0e;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin-top: auto;
         }
-        .table-container {
-            margin: 20px auto;
-            max-width: 90%;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
         }
         .table th {
             background-color: black;
@@ -51,10 +51,32 @@ $result = $conn->query($sql);
     </style>
 </head>
 <body>
+<div class="sticky-top">
+        <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    
+                    <span style="font-family: 'Times New Roman', Times, serif;">VS Restaurant Admin</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="navbar-nav ms-auto">
+                        <a class="nav-link active" href="./index.php">Dashboard</a>
+                        <a class="nav-link active" href="./user_data.php">User Data</a>
+                        <a class="nav-link active" href="./reservation.php">Reservations</a>
+                        <a class="nav-link active" href="./confirmed_details.php">Order Details</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
     <div class="container">
         <div class="table-container p-4">
             <h2 class="mb-4" style="text-align:center">Reservation Details</h2>
-            <table class="table table-striped table-bordered">
+            <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
                         <th>Delete</th>
@@ -92,6 +114,9 @@ $result = $conn->query($sql);
             </table>
         </div>
     </div>
+    <footer style="margin-top:390px">
+        <p>Copyright &copy; 2024 VS Restaurant. All rights reserved.</p>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

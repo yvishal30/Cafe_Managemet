@@ -65,8 +65,8 @@ $conn->close();
 
     <!-- Content Section -->
     <div class="container mt-5">
-        <h1>Admin Dashboard</h1>
-        <p>Overview of the restaurant's data:</p>
+        <!-- <h1 style="text-align: center;">Admin Dashboard</h1> -->
+        <!-- <p style="text-align: center;">Overview of the restaurant's data:</p> -->
 
         <div class="row">
             <!-- Confirmed Orders Chart -->

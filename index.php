@@ -90,9 +90,9 @@
 <div class="main_content" style="text-align: center;">
 
 <centre>
-  <h1 style="font-family: 'Times New Roman', Times, serif; font-weight: 600;color: #fff;">Welcome To <span style="color: #B03060;">VS Restaurant</span></h1>
-  <h1 style="font-family: 'Times New Roman', Times, serif;font-weight: 600;color: #fff;">CAFE & RESTAURANT FOR <br>FRIENDS & FAMILY</h1>
-  <br></br><h3 style="font-style: italic;color: #FFD700;">Newly Opened !!!</h3>
+  <h1 style="font-family: 'Times New Roman', Times, serif; font-weight: 600;color: #fff;text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);">Welcome To <span style="color: #B03060;text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);">VS Restaurant</span></h1>
+  <h1 style="font-family: 'Times New Roman', Times, serif;font-weight: 600;color: #fff;text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);">CAFE & RESTAURANT FOR <br>FRIENDS & FAMILY</h1>
+  <br></br><h3 style="font-style: italic;color: #FFD700;text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);">Newly Opened !!!</h3>
 </centre>
   
 </div>

@@ -14,7 +14,7 @@
     <style>
         body {
             margin-top: 120px ;
-            background-image: url(./bg1.jpg);
+            background-image: url(../images/bg1.jpg);
         }
         .form-container {
             width: 100%;

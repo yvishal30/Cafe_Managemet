@@ -154,8 +154,10 @@
                 var message = form.elements['message'].value;
     
                 var mailtoLink = 'mailto:30vishalyadav@gmail.com' +
-                    '?subject=' + encodeURIComponent('Contact Form Submission') +
-                    '&body=' + encodeURIComponent('Name: ' + name + '\n\nEmail: ' + email + '\n\nMessage: ' + message);
+    '?subject=' + encodeURIComponent('Contact Form Submission') +
+    '&body=' + encodeURIComponent('Name: ' + name + '\n\nEmail: ' + email + '\n\nMessage: ' + message) +
+    '&from=' + encodeURIComponent(email);
+
     
                 window.location.href = mailtoLink;
             });

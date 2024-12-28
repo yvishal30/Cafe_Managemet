@@ -73,8 +73,13 @@
           </nav>
     </div>
     
+    <!-- Reservation Messages -->
+<?php if (isset($_GET['message'])): ?>
+    <div class="alert alert-<?php echo $_GET['status'] === 'success' ? 'success' : 'danger'; ?> text-center" role="alert">
+        <?php echo htmlspecialchars($_GET['message']); ?>
+    </div>
+<?php endif; ?>
     <div class="container" >
-        
         <form class="form" action="process_reservation.php" method="post">
             <table style="background-color: black; color: white; font-family: fantasy;font-size: large;">
                 <tr>

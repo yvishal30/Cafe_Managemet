@@ -1,9 +1,9 @@
 <?php
 // Database connection settings
-$servername = "localhost";  // Usually "localhost" in XAMPP
-$username = "root";         // Default username for XAMPP
-$password = "";             // Default password for XAMPP (blank)
-$dbname = "restaurant";  // Database name
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "restaurant"; // Database name
 
 // Create a connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -16,11 +16,20 @@ if ($conn->connect_error) {
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $message = $_POST['message'];
+    $name = trim($_POST['name']);
+    $email = trim($_POST['email']);
+    $message = trim($_POST['message']);
 
-    // Prepare and bind SQL statement to prevent SQL injection
+    // Validate form data
+    if (empty($name) || empty($email) || empty($message)) {
+        echo "<script>
+                alert('All fields are required. Please try again.');
+                window.location.href = 'contact.php';
+              </script>";
+        exit;
+    }
+
+    // Prepare and bind SQL statement
     $stmt = $conn->prepare("INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $name, $email, $message);
 
@@ -34,13 +43,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Send email
         if (mail($to, $subject, $body, $headers)) {
-            // Email sent successfully, show success message
+            // Email sent successfully
             echo "<script>
                     alert('Message sent and saved successfully!');
                     window.location.href = 'contact.php';
                   </script>";
         } else {
-            // Failed to send email but data is saved
+            // Failed to send email, but data is saved
             echo "<script>
                     alert('Message saved, but email failed to send.');
                     window.location.href = 'contact.php';
@@ -54,10 +63,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </script>";
     }
 
-    // Close statement
+    // Close the statement
     $stmt->close();
 }
 
-// Close connection
+// Close the database connection
 $conn->close();
 ?>

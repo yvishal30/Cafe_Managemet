@@ -79,10 +79,24 @@
                     </p><br>
                     
                     <h3 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">ESTABLISHED IN 2024</h3>
-                      <p style="font-family: 'Times New Roman', Times, serif;font-size: 19px;">We are excited to introduce VS Restaurant, our new restaurant with beautiful design and a cozy atmosphere. Our skilled chefs prepare a wide variety of delicious dishes, from tasty starters to amazing main courses and desserts. You’ll also love our selection of drinks, including refreshing cocktails and fine wines.
+<p style="font-family: 'Times New Roman', Times, serif;font-size: 19px;">
+    We are excited to introduce VS Restaurant, our new restaurant with beautiful design and a cozy atmosphere. Our skilled chefs prepare a wide variety of delicious dishes, from tasty starters to amazing main courses and desserts. You’ll also love our selection of drinks, including refreshing cocktails and fine wines.
+    With great food, friendly service, and a stunning space, we’re here to make every visit special. Come and enjoy a memorable dining experience at VS Restaurant!
+</p>
 
-                        With great food, friendly service, and a stunning space, we’re here to make every visit special. Come and enjoy a memorable dining experience at VS Restaurant!</p>
-                     </td>
+<!-- Star Rating Section -->
+<div style="text-align: center; margin-top: 20px;">
+    <h4 style="font-family: 'Times New Roman', Times, serif;">Rate Our Restaurant</h4>
+    <div>
+        <i class="fas fa-star" style="color: gold; font-size: 1.5rem;"></i>
+        <i class="fas fa-star" style="color: gold; font-size: 1.5rem;"></i>
+        <i class="fas fa-star" style="color: gold; font-size: 1.5rem;"></i>
+        <i class="fas fa-star" style="color: gold; font-size: 1.5rem;"></i>
+        <i class="fas fa-star-half-alt" style="color: gold; font-size: 1.5rem;"></i>
+    </div>
+    <p style="font-family: 'Times New Roman', Times, serif; font-size: 16px; margin-top: 10px;">4.5/5 - Based on customer reviews</p>
+</div>
+
 
                 <td>
                   <img src=".\images\food.jpg" style="width: 550px;height: 600px;padding-left: 60px;padding-top: 80px;">
@@ -95,7 +109,7 @@
 
 <div class="flex">
 <h1><hr></h1>
-<center><h1 style="color:rgba(232, 7, 7, 0.858);">Our Chef</h1></center>
+<center><h1 style="color:rgba(232, 7, 7, 0.858);">Our Chef's</h1></center>
 
 <div class="container">
   <table>

@@ -38,6 +38,15 @@
 .main_content{
   padding-left: 10px;
 }
+
+.carousel-inner {
+        height: 500px;
+      }
+
+      .carousel-item img {
+        height: 500px;
+        object-fit: cover;
+      }
     </style>
   </head>
   <body>
@@ -95,15 +104,58 @@
   <br></br><h3 style="font-style: italic;color: #FFD700;text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);">Newly Opened !!!</h3>
 </centre>
   
+<br></br><br></br><br></br><br></br><br>
+<div class="container mt-5" >
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="row">
+              <div class="col-md-4">
+                <img src="./images/i3.jpg" class="d-block w-100" alt="Image 1">
+              </div>
+              <div class="col-md-4">
+                <img src="./images/i4.jpg" class="d-block w-100" alt="Image 2">
+              </div>
+              <div class="col-md-4">
+                <img src="./images/i5.jpg" class="d-block w-100" alt="Image 3">
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row">
+              <div class="col-md-4">
+                <img src="./images/i7.jpg" class="d-block w-100" alt="Image 4">
+              </div>
+              <div class="col-md-4">
+                <img src="./images/i6.jpg" class="d-block w-100" alt="Image 5">
+              </div>
+              <div class="col-md-4">
+                <img src="./images/i2.jpg" class="d-block w-100" alt="Image 6">
+              </div>
+            </div>
+          </div>
+          <!-- Add more slides as needed -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+ 
 </div>
 
-
-    <br></br><br></br><br></br>
+<br></br>
+    <!-- <br></br><br></br>
   </div>
 
   <div style="background-color:#e0ebeb;width:100%;height:50px;">
   
-  </div>
+  </div> -->
 
     <div>
         <footer style="background-color:#130e0e;color: #fff;padding: 20px;text-align: center;height: 20%;width: 100%;margin-bottom: 0px;">

@@ -104,7 +104,7 @@
   <br></br><h3 style="font-style: italic;color: #FFD700;text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);">Newly Opened !!!</h3>
 </centre>
   
-<br></br><br></br><br></br><br></br><br>
+<br></br><br></br><br></br><br></br><br><br>
 <div class="container mt-5" >
       <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
         <div class="carousel-inner">

@@ -26,10 +26,10 @@ if (mysqli_num_rows($result) > 0) {
     $result = mysqli_query($conn, $sql) or die("Query unsuccessful.");
 
     // Redirect to the homepage or main page
-    header("Location: http://localhost/Cafe_Management/index.php");
+    header("Location: http://localhost:800/Cafe_Management/index.php");
 } else {
     // Redirect back to the login page with an error if credentials are invalid
-    header("Location: http://localhost/Cafe_Management/login.php?error=1");
+    header("Location: http://localhost:800/Cafe_Management/login.php?error=1");
 }
 
 mysqli_close($conn);

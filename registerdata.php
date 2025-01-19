@@ -9,7 +9,7 @@ $conn=mysqli_connect("localhost","root","","restaurant") or die("Connection erro
 $sql= "INSERT INTO register(username,email,password,confirm_password) values('{$username}','{$email}','{$password}','{$c_password}')";
 $result=mysqli_query($conn,$sql) or die("query unsuccessful.");
 
-header("Location: http://localhost/Cafe_Management/login.php");
+header("Location: http://localhost:800/Cafe_Management/login.php");
 
 mysqli_close($conn);
  ?>
